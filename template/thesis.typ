@@ -1,4 +1,4 @@
-#import "@preview/modern-nju-thesis:0.3.4": documentclass, indent
+#import "../lib.typ": documentclass, indent
 
 // 你首先应该安装 https://github.com/nju-lug/modern-nju-thesis/tree/main/fonts/FangZheng 里的所有字体，
 // 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
@@ -13,24 +13,18 @@
   // doctype: "bachelor",  // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为本科生 bachelor
   // degree: "academic",  // "academic" | "professional", 学位类型，默认为学术型 academic
   // anonymous: true,  // 盲审模式
-  twoside: true,  // 双面模式，会加入空白页，便于打印
+  twoside: false,  // 双面模式，会加入空白页，便于打印
   // 可自定义字体，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
   // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
   info: (
-    title: ("基于 Typst 的", "南京大学学位论文"),
-    title-en: "My Title in English",
+    title: ("基于 Typst 的", "吉林大学学位论文"),
+    title-en: "My Title in English\nOh wow, it's so long!",
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
-    author-en: "Ming Xing",
     department: "某学院",
-    department-en: "School of Chemistry and Chemical Engineering",
     major: "某专业",
-    major-en: "Chemistry",
     supervisor: ("李四", "教授"),
-    supervisor-en: "Professor My Supervisor",
-    // supervisor-ii: ("王五", "副教授"),
-    // supervisor-ii-en: "Professor My Supervisor",
     submit-date: datetime.today(),
   ),
   // 参考文献源
@@ -47,7 +41,7 @@
 #cover()
 
 // 声明页
-#decl-page()
+// #decl-page()
 
 
 // 前言
@@ -141,7 +135,7 @@
 ]))
 
 #figure(
-  image("images/nju-emblem.svg", width: 20%),
+  image("images/校徽.jpg", width: 20%),
   caption: [图片测试],
 ) <nju-logo>
 
@@ -201,7 +195,7 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 // 致谢
 #acknowledgement[
-  感谢 NJU-LUG，感谢 NJUThesis LaTeX 模板。
+  感谢 JLU-CCST, 感谢 nju-lug/modern-nju-thesis 模板。
 ]
 
 // 手动分页
@@ -213,15 +207,15 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 // 附录
 #show: appendix
 
-= 附录
+// = 附录
 
-== 附录子标题
+// == 附录子标题
 
-=== 附录子子标题
+// === 附录子子标题
 
-附录内容，这里也可以加入图片，例如@fig:appendix-img。
+// 附录内容，这里也可以加入图片，例如@fig:appendix-img。
 
-#figure(
-  image("images/nju-emblem.svg", width: 20%),
-  caption: [图片测试],
-) <appendix-img>
+// #figure(
+//   image("images/校徽.jpg", width: 20%),
+//   caption: [图片测试],
+// ) <appendix-img>

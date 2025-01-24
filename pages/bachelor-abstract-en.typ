@@ -17,7 +17,7 @@
   outlined: false,
   anonymous-info-keys: ("author-en", "supervisor-en", "supervisor-ii-en"),
   leading: 1.28em,
-  spacing: 1.38em,
+  spacing: 1.28em,
   body,
 ) = {
   // 1.  默认参数
@@ -44,40 +44,41 @@
   }
 
   // 4.  正式渲染
-  [
-    #pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak(weak: true, to: if twoside { "odd" })
 
+  [
     #set text(font: fonts.楷体, size: 字号.小四)
     #set par(leading: leading, justify: true)
-    #show par: set block(spacing: spacing)
+    #set par(spacing: spacing)
 
     // 标记一个不可见的标题用于目录生成
     #invisible-heading(level: 1, outlined: outlined, outline-title)
 
     #align(center)[
-      #set text(size: 字号.小二, weight: "bold")
-
-      #v(1em)
-
-      #double-underline[#fakebold[南京大学本科生毕业论文（设计、作品）英文摘要]]
+      #set text(size: 字号.小三)
+      #v(1.28em)
+      #info.title-en.intersperse(" ").sum()
+      #v(1.28em)
+      #set text(size: 字号.四号, weight: "bold")
+      Abstract
     ]
 
-    #v(2pt)
+    #[
+      #set par(first-line-indent: 2em)
 
-    THESIS: #info-value("title-en", (("",)+ info.title-en).sum())
-
-    DEPARTMENT: #info-value("department-en", info.department-en)
-
-    SPECIALIZATION: #info-value("major-en", info.major-en)
-
-    UNDERGRADUATE: #info-value("author-en", info.author-en)
-
-    MENTOR: #info-value("supervisor-en", info.supervisor-en) #(if info.supervisor-ii-en != "" [#h(1em) #info-value("supervisor-ii-en", info.supervisor-ii-en)])
-
-    ABSTRACT: #body
+      #fake-par
+      
+      #body
+    ]
 
     #v(1em)
 
-    KEYWORDS: #(("",)+ keywords.intersperse("; ")).sum()
+    #{
+      set text(size: 字号.四号, weight: "bold")
+      [Keywords]
+    }
+    
+    #h(2em)
+    #(("",)+ keywords.intersperse(", ")).sum()
   ]
 }

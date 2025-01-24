@@ -137,7 +137,10 @@
 
   set text(lang: "zh")
   bibliography(
-    title: title,
+    title: [
+      #title
+      #v(17pt) // 在这里添加标题下方的间距
+    ],
     full: full,
     style: style,
   )

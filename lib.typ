@@ -43,7 +43,7 @@
   // 默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "吉林大学学位论文"),
     title-en: "NJU Thesis Template for Typst",
     grade: "20XX",
     student-id: "1234567890",
@@ -69,9 +69,9 @@
     clc: "O643.12",
     udc: "544.4",
     secret-level: "公开",
-    supervisor-contact: "南京大学 江苏省南京市栖霞区仙林大道163号",
-    email: "xyz@smail.nju.edu.cn",
-    school-code: "10284",
+    supervisor-contact: "吉林大学 吉林省长春市朝阳区前进大街2699号",
+    email: "xyz@mails.jlu.edu.cn",
+    school-code: "10183",
     degree: auto,
     degree-en: auto,
   ) + info
@@ -231,6 +231,16 @@
     outline-page: (..args) => {
       bachelor-outline-page(
         twoside: twoside,
+        font: (fonts.宋体, ),
+        size: (字号.四号, ),
+        fill: (
+          line(
+            length: 100%,
+            stroke: (paint: black, cap: "round", thickness: 1.5pt, dash: (.1pt, 7pt))
+          ),
+        ),
+        vspace: (1.5em, 1.5em),
+        title-vspace: 18pt,
         ..args,
         fonts: fonts + args.named().at("fonts", default: (:)),
       )

@@ -4,6 +4,7 @@
 #import "../utils/custom-heading.typ": heading-display, active-heading, current-heading
 #import "../utils/indent.typ": fake-par
 #import "../utils/unpairs.typ": unpairs
+#import "../utils/custom-cuti.typ": fakebold
 
 #let mainmatter(
   // documentclass 传入参数
@@ -19,16 +20,17 @@
   text-args: auto,
   // 标题字体与字号
   heading-font: auto,
-  heading-size: (字号.四号,),
-  heading-weight: ("regular",),
-  heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
-  heading-below: (2 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
+  heading-size: (字号.三号, 字号.四号,),
+  heading-weight: ("regular", ),
+  heading-above: (17pt * 1.5, 18pt * 1.5),
+  heading-below: (18pt * 1.5, 13pt * 1.5),
   heading-pagebreak: (true, false),
   heading-align: (center, auto),
   // 页眉
   header-render: auto,
   header-vspace: 0em,
-  display-header: false,
+  display-header: true,
+  header-text: "吉林大学 计算机科学与技术学院 毕业论文",
   skip-on-first-level: true,
   stroke-width: 0.5pt,
   reset-footnote: true,
@@ -54,7 +56,7 @@
   }
   // 1.1 字体与字号
   if (heading-font == auto) {
-    heading-font = (fonts.黑体,)
+    heading-font = (fonts.宋体,)
   }
   // 1.2 处理 heading- 开头的其他参数
   let heading-text-args-lists = args.named().pairs()
@@ -110,8 +112,12 @@
       above: array-at(heading-above, it.level),
       below: array-at(heading-below, it.level),
     )
-    it
+    fakebold(it)
     fake-par
+  }
+  show heading.where(level: 1): it => {
+    v(17pt)
+    it
   }
   // 4.3 标题居中与自动换页
   show heading: it => {
@@ -137,25 +143,28 @@
         if reset-footnote {
           counter(footnote).update(0)
         }
-        let loc = here()
-        // 5.1 获取当前页面的一级标题
-        let cur-heading = current-heading(level: 1)
-        // 5.2 如果当前页面没有一级标题，则渲染页眉
-        if not skip-on-first-level or cur-heading == none {
-          if header-render == auto {
-            // 一级标题和二级标题
-            let first-level-heading = if not twoside or calc.rem(loc.page(), 2) == 0 { heading-display(active-heading(level: 1, loc)) } else { "" }
-            let second-level-heading = if not twoside or calc.rem(loc.page(), 2) == 2 { heading-display(active-heading(level: 2, prev: false, loc)) } else { "" }
-            set text(font: fonts.楷体, size: 字号.五号)
-            stack(
-              first-level-heading + h(1fr) + second-level-heading,
-              v(0.25em),
-              if first-level-heading != "" or second-level-heading != "" { line(length: 100%, stroke: stroke-width + black) },
-            )
+        set align(center)
+        set text(font: 字体.楷体, size: 字号.小四, lang: "zh")
+        set par(first-line-indent: 0pt, leading: 16pt, justify: true, spacing: 16pt)
+
+        header-text
+        v(-12pt)
+        line(length: 100%, stroke: (thickness: 0.5pt))
+        v(-12pt)
+      },
+      // 根据twoside参数设置页码位置
+      footer: context {
+        set text(font: fonts.宋体, size: 字号.小五)
+        if twoside {
+          // 双面打印：奇数页在右下角，偶数页在左下角
+          if calc.rem(here().page(), 2) == 1 {
+            align(right, counter(page).display())
           } else {
-            header-render(loc)
+            align(left, counter(page).display())
           }
-          v(header-vspace)
+        } else {
+          // 单面打印：所有页码都在右下角
+          align(right, counter(page).display())
         }
       }
     )
